@@ -1,0 +1,23 @@
+---
+title: "test rmd"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+
+theme_update(plot.title = element_text(hjust = 0.5, face = "bold"))
+data(mtcars)
+```
+
+## Plotting
+
+```{r plotting1}
+ggplot(data = mtcars, aes(x=disp,y=mpg)) +
+  geom_point(color = 'blue') +
+  labs(title = "Displacement vs MPG", x = "Displacement", y = "MPG")
+
+```
