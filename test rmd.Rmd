@@ -11,6 +11,11 @@ library(RColorBrewer)
 
 theme_update(plot.title = element_text(hjust = 0.5, face = "bold"))
 data(mtcars)
+
+library(readr)
+uiuc_gpa_dataset <- read_csv("~/Git/r-testing/uiuc-gpa-dataset.csv", 
+     col_types = cols(Year = col_character(), 
+         Number = col_character()))
 ```
 
 ## Plotting
@@ -19,5 +24,26 @@ data(mtcars)
 ggplot(data = mtcars, aes(x=disp,y=mpg)) +
   geom_point(color = 'blue') +
   labs(title = "Displacement vs MPG", x = "Displacement", y = "MPG")
+```
+
+## Setting Up UIUC dataset
+
+```{r data_setup}
+
+gradeCols = c('A+','A','A-',
+              'B+','B','B-',
+              'C+','C','C-',
+              'D+','D','D-',
+              'F','W'       )
+
+uiuc_gpa_dataset$num_students = rowSums(uiuc_gpa_dataset[,gradeCols])
+
+uiuc_gpa_dataset$average = 
+```
+
+## plotting GPA dataset
+
+```{r plotting2}
+ggplot(data=uiuc_gpa_dataset, aes(x=num_students,y=))
 
 ```
