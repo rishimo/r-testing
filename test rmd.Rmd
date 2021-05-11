@@ -16,6 +16,7 @@ library(readr)
 uiuc_gpa_dataset <- read_csv("~/Git/r-testing/uiuc-gpa-dataset.csv", 
      col_types = cols(Year = col_character(), 
          Number = col_character()))
+
 ```
 
 ## Plotting
@@ -36,14 +37,25 @@ gradeCols = c('A+','A','A-',
               'D+','D','D-',
               'F','W'       )
 
-uiuc_gpa_dataset$num_students = rowSums(uiuc_gpa_dataset[,gradeCols])
+gradeWeights = c(4, 4, 3.67,
+                 3.33, 3, 2.67,
+                 2.33, 2, 1.67,
+                 1.33, 1, .67,
+                 0, 0       )
 
-uiuc_gpa_dataset$average = 
+uiuc_gpa_dataset$numStudents = rowSums(uiuc_gpa_dataset[,gradeCols])
+for (x in 1:length(uiuc_gpa_dataset)) {
+  uiuc_gpa_dataset$avgGPA[x] = sum(uiuc_gpa_dataset[x,gradeCols] * gradeWeights) / uiuc_gpa_dataset$numStudents[x]
+  }
+
+
 ```
 
 ## plotting GPA dataset
 
 ```{r plotting2}
-ggplot(data=uiuc_gpa_dataset, aes(x=num_students,y=))
+ggplot(data=uiuc_gpa_dataset, aes(x=Year,y=avgGPA)) +
+  geom_point(aes(size = numStudents)) +
+  geom_jitter()
 
 ```
