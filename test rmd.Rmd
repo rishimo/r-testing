@@ -54,11 +54,15 @@ for (x in 1:length(uiuc_gpa_dataset$Year)) {
 ## plotting GPA dataset
 
 ```{r plotting2}
+
 uiuc2020 = subset(uiuc_gpa_dataset, Year == 2020)
 
-ggplot(data=uiuc2020,aes(x=numStudents,y=avgGPA, color = avgGPA)) +
-  scale_x_log10(minor_breaks=seq(0,1200,10)) +
-  geom_point() +
-  geom_jitter(alpha=.5, width=0)
+ggplot(data=uiuc2020,aes(x=avgGPA, color = YearTerm)) +
+  geom_histogram(bins = 500)
+
+lowest_profs = uiuc_gpa_dataset %>%
+  group_by(`Primary Instructor`) %>%
+  filter(n()>10) %>%
+  summarize(mean = mean(avgGPA))
 
 ```
