@@ -44,7 +44,7 @@ gradeWeights = c(4, 4, 3.67,
                  0, 0       )
 
 uiuc_gpa_dataset$numStudents = rowSums(uiuc_gpa_dataset[,gradeCols])
-for (x in 1:length(uiuc_gpa_dataset)) {
+for (x in 1:length(uiuc_gpa_dataset$Year)) {
   uiuc_gpa_dataset$avgGPA[x] = sum(uiuc_gpa_dataset[x,gradeCols] * gradeWeights) / uiuc_gpa_dataset$numStudents[x]
   }
 
@@ -54,8 +54,11 @@ for (x in 1:length(uiuc_gpa_dataset)) {
 ## plotting GPA dataset
 
 ```{r plotting2}
-ggplot(data=uiuc_gpa_dataset, aes(x=Year,y=avgGPA)) +
-  geom_point(aes(size = numStudents)) +
-  geom_jitter()
+uiuc2020 = subset(uiuc_gpa_dataset, Year == 2020)
+
+ggplot(data=uiuc2020,aes(x=numStudents,y=avgGPA, color = avgGPA)) +
+  scale_x_log10(minor_breaks=seq(0,1200,10)) +
+  geom_point() +
+  geom_jitter(alpha=.5, width=0)
 
 ```
